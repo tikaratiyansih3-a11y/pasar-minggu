@@ -1,0 +1,6 @@
+<?php
+require 'config.php';$id=(int)($_GET['id']??0);$s=$pdo->prepare("SELECT p.*,c.name category_name FROM products p LEFT JOIN categories c ON c.id=p.category_id WHERE p.id=? AND p.active=1");$s->execute([$id]);$p=$s->fetch();if(!$p){http_response_code(404);exit('Produk tidak ditemukan');}
+if($_SERVER['REQUEST_METHOD']==='POST'){check_csrf();$qty=max(1,(int)$_POST['qty']);if($qty>$p['stock']){$error='Jumlah melebihi stok.';}else{$_SESSION['cart'][$id]=min($p['stock'],($_SESSION['cart'][$id]??0)+$qty);go('cart.php');}}
+$page_title=$p['name'];require 'header.php';?>
+<div class="detail"><div class="detail-image"><?php if($p['image_url']):?><img src="<?=e($p['image_url'])?>" alt="<?=e($p['name'])?>"><?php else:?>🛍️<?php endif;?></div><div><p class="eyebrow"><?=e($p['category_name']??'Produk')?></p><h1><?=e($p['name'])?></h1><h2 class="price"><?=rupiah($p['price'])?></h2><p><?=nl2br(e($p['description']))?></p><p class="muted">Stok tersedia: <?=$p['stock']?></p><?php if(!empty($error)):?><p class="alert"><?=e($error)?></p><?php endif;?>
+<form method="post" class="buy"><input type="hidden" name="csrf" value="<?=csrf()?>"><input type="number" name="qty" min="1" max="<?=$p['stock']?>" value="1" required><button class="btn" <?=$p['stock']<1?'disabled':''?>>Tambah ke keranjang</button></form></div></div><?php require 'footer.php';?>

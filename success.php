@@ -1,0 +1,1 @@
+<?php require 'config.php';$id=(int)($_SESSION['last_order']??0);$page_title='Pesanan berhasil';require 'header.php';?><div class="success"><div>✓</div><h1>Pesanan berhasil dibuat!</h1><p>Nomor pesanan kamu: <b>#<?=$id?></b></p><p>Admin akan memproses pesananmu.</p><a class="btn" href="index.php">Kembali belanja</a></div><?php require 'footer.php';?>

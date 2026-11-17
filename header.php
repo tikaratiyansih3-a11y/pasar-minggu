@@ -1,0 +1,3 @@
+<?php require_once __DIR__.'/config.php'; ?>
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title><?= e($page_title ?? 'PasarKita') ?></title><link rel="stylesheet" href="assets/style.css"></head><body>
+<header class="top"><a class="brand" href="index.php">🌿 PasarKita</a><nav><a href="index.php">Beranda</a><a href="index.php#produk">Produk</a><a href="cart.php">Keranjang (<?= cart_count() ?>)</a><?php if(is_admin()): ?><a href="admin/index.php">Admin</a><a href="logout.php">Keluar</a><?php else: ?><a href="login.php">Admin</a><?php endif; ?></nav></header><main class="wrap">
